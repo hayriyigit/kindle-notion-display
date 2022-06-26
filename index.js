@@ -66,7 +66,7 @@ function convert(filename) {
   Jimp.read(filename, (err, img) => {
     if (err) throw err;
     img
-      .resize(600, 800) // resize
+      .resize(600, 800,Jimp.RESIZE_BEZIER) // resize
       .quality(100) // set JPEG quality
       .greyscale() // set greyscale
       .write(filename); // save
