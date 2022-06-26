@@ -44,14 +44,14 @@ app.get('/snap', async (req, res) => {
   await page.setViewport({ width: 600, height: 800 }); ``
   await page.goto(process.env.SCREENSHOT_URL, { waitUntil: ['networkidle0'] });
   await page.screenshot({
-    path: './screenshot.png',
+    path: '/tmp/screenshot.png',
   });
 
   await browser.close();
 
-  await convert('./screenshot.png')
+  await convert('/tmp/screenshot.png')
 
-  const screenshot = fs.readFileSync('./screenshot.png');
+  const screenshot = fs.readFileSync('/tmp/screenshot.png');
 
   res.writeHead(200, {
     'Content-Type': 'image/png',
