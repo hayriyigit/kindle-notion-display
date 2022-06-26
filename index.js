@@ -5,6 +5,8 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 const execFile = require('child_process').execFile;
 const fs = require('fs');
+const chromium = require('chrome-aws-lambda');
+
 
 const app = express();
 const port = process.env.PORT | 3000
@@ -12,7 +14,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
@@ -27,9 +29,17 @@ app.get('/others', async (req, res) => {
 })
 
 app.get('/snap', async (req, res) => {
-  const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  const browser = await puppeteer.launch(
+    {
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
+    }
+  );
   const page = await browser.newPage();
-  await page.setViewport({ width: 600, height: 800 });``
+  await page.setViewport({ width: 600, height: 800 }); ``
   await page.goto(process.env.SCREENSHOT_URL || 'http://localhost:3000', { waitUntil: ['networkidle0'] });
   await page.screenshot({
     path: '/tmp/screenshot.png',
