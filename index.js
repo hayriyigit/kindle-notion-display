@@ -3,9 +3,9 @@ const getOthers = require('./services/other_blocks')
 const express = require('express')
 const path = require('path');
 const puppeteer = require('puppeteer');
-const execFile = require('child_process').execFile;
 const fs = require('fs');
 const { Image } = require('image-js');
+const chromium = require('chrome-aws-lambda');
 
 
 
@@ -33,7 +33,11 @@ app.get('/others', async (req, res) => {
 app.get('/snap', async (req, res) => {
   const browser = await puppeteer.launch(
     {
-      args: ["--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox'],
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox'],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
     }
   );
   const page = await browser.newPage();
