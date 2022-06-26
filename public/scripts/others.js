@@ -4,7 +4,7 @@ const todos_list = document.getElementById('todos_list')
 
 
 async function getOthersFromBackend() {
-    const res = await fetch('http://localhost:3000/others')
+    const res = await fetch('https://kindle-notion-display.vercel.app/others')
     const data = await res.json()
 
     return data

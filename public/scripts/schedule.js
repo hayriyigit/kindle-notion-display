@@ -10,7 +10,7 @@ function getHourString() {
 }
 
 async function getSchedulesFromBackend() {
-    const res = await fetch('http://localhost:3000/schedules')
+    const res = await fetch('https://kindle-notion-display.vercel.app/schedules')
     const data = await res.json()
 
     return data
