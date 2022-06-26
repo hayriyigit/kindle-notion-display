@@ -11,7 +11,7 @@ const chromium = require('chrome-aws-lambda');
 
 
 const app = express();
-const port = process.env.PORT
+const port = process.env.PORT | 3000
 app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -31,7 +31,7 @@ app.get('/others', async (req, res) => {
 })
 
 app.get('/snap', async (req, res) => {
-  const browser = await chromium.puppeteer.launch(
+  const browser = await puppeteer.launch(
     {
       args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: chromium.defaultViewport,
