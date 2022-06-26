@@ -2,7 +2,6 @@ const habits_list = document.getElementById('habits_list')
 const goals_list = document.getElementById('goals_list')
 const todos_list = document.getElementById('todos_list')
 
-
 async function getOthersFromBackend() {
     const res = await fetch('https://kindle-notion-display.vercel.app/others')
     const data = await res.json()

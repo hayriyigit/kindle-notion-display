@@ -5,8 +5,8 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 const execFile = require('child_process').execFile;
 const fs = require('fs');
-const chromium = require('chrome-aws-lambda');
-const Jimp = require('jimp');
+const { Image } = require('image-js');
+
 
 
 
@@ -33,24 +33,21 @@ app.get('/others', async (req, res) => {
 app.get('/snap', async (req, res) => {
   const browser = await puppeteer.launch(
     {
-    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox'],
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: true,
-    ignoreHTTPSErrors: true,
+      args: ["--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox'],
     }
   );
   const page = await browser.newPage();
   await page.setViewport({ width: 600, height: 800 }); ``
   await page.goto(process.env.SCREENSHOT_URL, { waitUntil: ['networkidle0'] });
   await page.screenshot({
-    path: '/tmp/screenshot.png',
+    path: './screenshot.png',
   });
 
   await browser.close();
 
-  await convert('/tmp/screenshot.png');
-  screenshot = fs.readFileSync('/tmp/screenshot.png');
+  await convert('./screenshot.png')
+
+  const screenshot = fs.readFileSync('./screenshot.png');
 
   res.writeHead(200, {
     'Content-Type': 'image/png',
@@ -62,15 +59,10 @@ app.get('/snap', async (req, res) => {
 
 app.listen(port);
 
-function convert(filename) {
-  Jimp.read(filename, (err, img) => {
-    if (err) throw err;
-    img
-      .resize(600, 800,Jimp.RESIZE_BEZIER) // resize
-      .quality(100) // set JPEG quality
-      .greyscale() // set greyscale
-      .write(filename); // save
-  });
 
-  
+async function convert(filename) {
+  let image = await Image.load(filename);
+  let grey = image
+    .grey()
+  return grey.save(filename);
 }

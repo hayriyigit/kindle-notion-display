@@ -12,12 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@notionhq/client": "^1.0.4",
-    "chrome-aws-lambda": "^10.1.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "jimp": "^0.16.1",
-    "puppeteer": "^15.1.1",
-    "puppeteer-core": "^15.1.1"
+    "image-js": "^0.34.1",
+    "puppeteer": "^15.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.18"
