@@ -31,11 +31,11 @@ app.get('/others', async (req, res) => {
 app.get('/snap', async (req, res) => {
   const browser = await puppeteer.launch(
     {
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
+    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath,
+    headless: true,
+    ignoreHTTPSErrors: true,
     }
   );
   const page = await browser.newPage();
