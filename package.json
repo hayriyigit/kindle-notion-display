@@ -1,0 +1,22 @@
+{
+  "name": "web-kindle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@notionhq/client": "^1.0.4",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "puppeteer": "^15.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  }
+}

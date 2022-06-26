@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sample Site</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="weather">
+      <i class="fa-solid fa-cloud" id="weather_icon"></i>
+      <div class="weather_info">
+        <p class="temperature" id="temperature"></p>
+        <p class="weather_type" id="weather_type"></p>
+      </div>
+    </div>
+    <div class="clock">
+      <p class="time" id="time"></p>
+      <div class="day_info">
+        <p class="day" id="day"></p>
+        <p class="seperator">|</p>
+        <p class="day_name" id="day_name"></p>
+      </div>
+    </div>
+
+    <div class="schedule">
+      <div class="header">
+        <i class="fa-solid fa-clock" style="color:rgb(129,129,129)"></i>
+        <p style="letter-spacing: 2px;">Schedule</p>
+      </div>
+      <div class="block_inner">
+        <ul id="schedule_list">
+        </ul>
+      </div>
+    </div>
+
+    <div class="todos">
+      <div class="header">
+        <i class="fa-solid fa-clipboard-check" style="color:rgb(129,129,129)"></i>
+        <p style="letter-spacing: 2px;">To Do</p>
+      </div>
+      <div class="block_inner">
+        <ul id="todos_list">
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="habits">
+      <div class="header">
+        <i class="fa-solid fa-person-rifle" style="color:rgb(129,129,129)"></i>
+        <p style="letter-spacing: 2px;">Habits</p>
+      </div>
+      <div class="block_inner">
+        <ul id="habits_list">
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="goals">
+      <div class="header">
+        <i class="fa-solid fa-bullseye" style="color:rgb(129,129,129)"></i>
+        <p style="letter-spacing: 2px;">Goals</p>
+      </div>
+      <div class="block_inner">
+        <ul id="goals_list">
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/others.js"></script>
+  <script src="scripts/weather.js"></script>
+  <script src="scripts/clock.js"></script>
+  <script src="scripts/schedule.js"></script>
+</body>
+
+</html>

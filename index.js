@@ -1,0 +1,79 @@
+const getSchedules = require('./services/schedule')
+const getOthers = require('./services/other_blocks')
+const express = require('express')
+const path = require('path');
+const puppeteer = require('puppeteer');
+const execFile = require('child_process').execFile;
+const fs = require('fs');
+
+const app = express();
+const port = process.env.PORT | 3000
+app.use(express.static(__dirname + '/public'));
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+app.get('/schedules', async (req, res) => {
+  const schedules = await getSchedules()
+  res.json(schedules)
+})
+
+app.get('/others', async (req, res) => {
+  const others = await getOthers()
+  res.json(others)
+})
+
+app.get('/snap', async (req, res) => {
+  const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  const page = await browser.newPage();
+  await page.setViewport({ width: 600, height: 800 });``
+  await page.goto(process.env.SCREENSHOT_URL || 'http://192.168.1.35:3000/', { waitUntil: ['networkidle0'] });
+  await page.screenshot({
+    path: '/tmp/screenshot.png',
+  });
+
+  await browser.close();
+
+  await convert('/tmp/screenshot.png');
+  screenshot = fs.readFileSync('/tmp/screenshot.png');
+
+  res.writeHead(200, {
+    'Content-Type': 'image/png',
+    'Content-Length': screenshot.length,
+  });
+  return res.end(screenshot);
+})
+
+// (async () => {
+//   const databaseId = 'b354ffffb3f14942b6919759d2485a51';
+//   const payload = {
+//     path: `databases/${databaseId}/query`,
+//     method: 'POST',
+//   }
+
+//   const { results } = await notion.request(payload)
+
+//   results.forEach(element => {
+//     console.log(element.properties.Name)
+//   });
+// })();
+
+
+app.listen(port);
+
+function convert(filename) {
+  return new Promise((resolve, reject) => {
+    const args = [filename, '-gravity', 'center', '-extent', '600x800', '-colorspace', 'gray', '-depth', '8', filename];
+    execFile('convert', args, (error, stdout, stderr) => {
+      if (error) {
+        console.error({ error, stdout, stderr });
+        reject();
+      } else {
+        resolve();
+      }
+    });
+  });
+}
