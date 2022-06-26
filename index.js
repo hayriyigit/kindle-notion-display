@@ -29,9 +29,9 @@ app.get('/others', async (req, res) => {
 })
 
 app.get('/snap', async (req, res) => {
-  const browser = await chromium.puppeteer.launch(
+  const browser = await puppeteer.launch(
     {
-    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox'],
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath,
     headless: true,
