@@ -30,7 +30,7 @@ app.get('/snap', async (req, res) => {
   const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   const page = await browser.newPage();
   await page.setViewport({ width: 600, height: 800 });``
-  await page.goto(process.env.SCREENSHOT_URL || 'localhost:3000', { waitUntil: ['networkidle0'] });
+  await page.goto(process.env.SCREENSHOT_URL || 'http://localhost:3000', { waitUntil: ['networkidle0'] });
   await page.screenshot({
     path: '/tmp/screenshot.png',
   });
