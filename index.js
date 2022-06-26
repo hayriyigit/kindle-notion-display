@@ -6,6 +6,8 @@ const puppeteer = require('puppeteer');
 const execFile = require('child_process').execFile;
 const fs = require('fs');
 const chromium = require('chrome-aws-lambda');
+const Jimp = require('jimp');
+
 
 
 const app = express();
@@ -61,15 +63,14 @@ app.get('/snap', async (req, res) => {
 app.listen(port);
 
 function convert(filename) {
-  return new Promise((resolve, reject) => {
-    const args = [filename, '-gravity', 'center', '-extent', '600x800', '-colorspace', 'gray', '-depth', '8', filename];
-    execFile('convert', args, (error, stdout, stderr) => {
-      if (error) {
-        console.error({ error, stdout, stderr });
-        reject();
-      } else {
-        resolve();
-      }
-    });
+  Jimp.read(filename, (err, img) => {
+    if (err) throw err;
+    img
+      .resize(600, 800) // resize
+      .quality(100) // set JPEG quality
+      .greyscale() // set greyscale
+      .write(filename); // save
   });
+
+  
 }
