@@ -10,7 +10,7 @@ function getHourString() {
 }
 
 async function getSchedulesFromBackend() {
-    const res = await fetch('http://192.168.1.35:3000/schedules')
+    const res = await fetch('http://localhost:3000/schedules')
     const data = await res.json()
 
     return data

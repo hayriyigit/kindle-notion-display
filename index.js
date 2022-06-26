@@ -30,7 +30,7 @@ app.get('/snap', async (req, res) => {
   const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   const page = await browser.newPage();
   await page.setViewport({ width: 600, height: 800 });``
-  await page.goto(process.env.SCREENSHOT_URL || 'http://192.168.1.35:3000/', { waitUntil: ['networkidle0'] });
+  await page.goto(process.env.SCREENSHOT_URL || 'localhost:3000', { waitUntil: ['networkidle0'] });
   await page.screenshot({
     path: '/tmp/screenshot.png',
   });
@@ -46,20 +46,6 @@ app.get('/snap', async (req, res) => {
   });
   return res.end(screenshot);
 })
-
-// (async () => {
-//   const databaseId = 'b354ffffb3f14942b6919759d2485a51';
-//   const payload = {
-//     path: `databases/${databaseId}/query`,
-//     method: 'POST',
-//   }
-
-//   const { results } = await notion.request(payload)
-
-//   results.forEach(element => {
-//     console.log(element.properties.Name)
-//   });
-// })();
 
 
 app.listen(port);
